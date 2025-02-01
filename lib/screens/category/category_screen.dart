@@ -32,124 +32,124 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     final TextEditingController alertBoxController = TextEditingController();
     return Scaffold(
-        appBar: const AppBarWidget(
-          title: "Categories",
+      appBar: const AppBarWidget(
+        title: "Categories",
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 20,
+          left: 20,
+          right: 20,
         ),
-        backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.only(
-            top: 20,
-            left: 20,
-            right: 20,
-          ),
-          child: Column(
-            children: [
-              IncomeExpenseRadioButton(
-                groupValue: selectedCategoryGroupValue,
-                onChanged: (groupValue) {
-                  setState(
-                    () {
-                      selectedCategoryGroupValue = groupValue!;
-                    },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              ValueListenableBuilder(
-                valueListenable: (selectedCategoryGroupValue == 1
-                    ? CategoryDB.instance.incomeCategoryListListener
-                    : CategoryDB.instance.expenseCategoryListListener),
-                builder: (context, newList, _) {
-                  return Expanded(
-                    child: newList.isNotEmpty
-                        ? GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                            ),
-                            itemBuilder: (ctx, index) {
-                              final categoryList = newList[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Stack(children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.grey,
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        categoryList.name,
-                                      ),
+        child: Column(
+          children: [
+            IncomeExpenseRadioButton(
+              groupValue: selectedCategoryGroupValue,
+              onChanged: (groupValue) {
+                setState(
+                  () {
+                    selectedCategoryGroupValue = groupValue!;
+                  },
+                );
+              },
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            ValueListenableBuilder(
+              valueListenable: (selectedCategoryGroupValue == 1
+                  ? CategoryDB.instance.incomeCategoryListListener
+                  : CategoryDB.instance.expenseCategoryListListener),
+              builder: (context, newList, _) {
+                return Expanded(
+                  child: newList.isNotEmpty
+                      ? GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                          ),
+                          itemBuilder: (ctx, index) {
+                            final categoryList = newList[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Stack(children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.grey,
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      categoryList.name,
                                     ),
                                   ),
-                                  Positioned(
-                                    bottom: -5,
-                                    right: -5,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (ctx) {
-                                            return AlertDialog(
-                                              backgroundColor: Colors.white,
-                                              title: const Text("Delete Item"),
-                                              content: const Text(
-                                                  "Are you sure,you want to Delete ?"),
-                                              actions: [
-                                                MaterialButton(
-                                                  onPressed: () {
-                                                    CategoryDB.instance
-                                                        .deleteCategory(
-                                                            categoryList.id);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text("Yes"),
-                                                ),
-                                                MaterialButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text("No"),
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      icon: const Icon(Icons.delete),
-                                    ),
-                                  )
-                                ]),
-                              );
-                            },
-                            itemCount: newList.length,
-                          )
-                        : const Center(child: Text("No Categories !")),
-                  );
-                },
-              ),
-            ],
-          ),
+                                ),
+                                Positioned(
+                                  bottom: -5,
+                                  right: -5,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (ctx) {
+                                          return AlertDialog(
+                                            backgroundColor: Colors.white,
+                                            title: const Text("Delete Item"),
+                                            content: const Text(
+                                                "Are you sure,you want to Delete ?"),
+                                            actions: [
+                                              MaterialButton(
+                                                onPressed: () {
+                                                  CategoryDB.instance
+                                                      .deleteCategory(
+                                                          categoryList.id);
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text("Yes"),
+                                              ),
+                                              MaterialButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("No"),
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                )
+                              ]),
+                            );
+                          },
+                          itemCount: newList.length,
+                        )
+                      : const Center(child: Text("No Categories !")),
+                );
+              },
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xFF0B1C3B),
-          onPressed: () {
-            showDialogueBox(context, alertBoxController,
-                selectedCategoryGroupValue == 1 ? "Add Income" : "Add Expense");
-          },
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF0B1C3B),
+        onPressed: () {
+          showDialogueBox(context, alertBoxController,
+              selectedCategoryGroupValue == 1 ? "Add Income" : "Add Expense");
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
         ),
-        bottomNavigationBar: CurvedNavigationWidget()
-        // const BottomNavigationbarWidget(),
-        );
+      ),
+      // bottomNavigationBar: CurvedNavigationWidget()
+      // const BottomNavigationbarWidget(),
+    );
   }
 
   void showDialogueBox(BuildContext context,

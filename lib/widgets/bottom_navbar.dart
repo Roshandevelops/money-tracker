@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:money_tracker/screens/category/category_screen.dart';
@@ -24,20 +25,41 @@ class _BottomNavBarState extends State<BottomNavBar> {
     const ProfileScreen(),
   ];
 
-  @override
-  void initState() {
-    selectedIndexNotifier = ValueNotifier(0);
-    super.initState();
-  }
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     log(selectedIndexNotifier.toString());
-    return ValueListenableBuilder(
-      valueListenable: selectedIndexNotifier,
-      builder: (context, updatedIndex, child) {
-        return pages[updatedIndex];
-      },
+    return Scaffold(
+      bottomNavigationBar: CurvedNavigationBar(
+        animationDuration: const Duration(milliseconds: 300),
+        animationCurve: Curves.easeInCubic,
+        backgroundColor: const Color(0xFF0B1C3B),
+        items: const [
+          Icon(
+            Icons.home,
+          ),
+          Icon(
+            Icons.category,
+          ),
+          Icon(
+            Icons.person,
+          ),
+        ],
+        index: selectedIndex,
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
+        },
+      ),
+      body: pages[selectedIndex],
     );
+    // ValueListenableBuilder(
+    //   valueListenable: selectedIndexNotifier,
+    //   builder: (context, updatedIndex, child) {
+    //     return pages[updatedIndex];
+    //   },
+    // );
   }
 }

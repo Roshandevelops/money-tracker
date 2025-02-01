@@ -41,124 +41,122 @@ class _HomeScreenState extends State<HomeScreen> {
     TransactionDB.instance.transactionRefreshUI();
     CategoryDB.instance.categoryRefreshUI();
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBarWidget(
-          title: newName,
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 20,
-            ),
-            child: Column(
-              children: [
-                const CurrentBalanceWidget(),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      " Recent Transactions",
-                      style: AppTextStyle.body1,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          goToViewMore(context);
-                        },
-                        child: const Icon(
-                          Icons.format_list_bulleted_rounded,
-                          size: 30,
-                        )),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ValueListenableBuilder(
-                  valueListenable:
-                      TransactionDB.instance.transactionListNotifier,
-                  builder: (BuildContext context,
-                      List<TransactionModel> newList, _) {
-                    return Expanded(
-                        child: newList.isNotEmpty
-                            ? ListView.builder(
-                                itemCount:
-                                    newList.length >= 4 ? 4 : newList.length,
-                                itemBuilder: (ctx, index) {
-                                  final data = newList[index];
-                                  return Slidable(
-                                    key: Key(data.id!),
-                                    endActionPane: ActionPane(
-                                      motion: const DrawerMotion(),
-                                      children: [
-                                        SlidableAction(
-                                          onPressed: (ctx) {
-                                            log("sample edit");
-                                            editTransaction(
-                                              newList[index],
-                                            );
-                                          },
-                                          icon: Icons.edit,
-                                          backgroundColor: Colors.green,
-                                          label: "Edit",
-                                        ),
-                                        SlidableAction(
-                                          onPressed: (context) {
-                                            log("sample delete");
-
-                                            deleteTransaction(context, data);
-                                          },
-                                          icon: Icons.delete,
-                                          backgroundColor: Colors.red,
-                                          label: "Delete",
-                                        ),
-                                      ],
-                                    ),
-                                    child: TransactionCardWidget(
-                                      iconColor:
-                                          data.type == CategoryType.income
-                                              ? Colors.green
-                                              : Colors.red,
-                                      amount: data.amount,
-                                      dateTime: data.dateTime,
-                                      purposeText: data.categoryModel.name,
-                                      descriptionText: "(${data.description})",
-                                      iconData: data.type == CategoryType.income
-                                          ? Icons.arrow_circle_up_outlined
-                                          : Icons.arrow_circle_down_outlined,
-                                    ),
-                                  );
-                                })
-                            : const Center(child: Text("No Transactions !")));
-                  },
-                )
-              ],
-            ),
+      backgroundColor: Colors.white,
+      appBar: AppBarWidget(
+        title: newName,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: const Color(0xFF0B1C3B),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (ctx) {
-                  return const AddTransactionScreen();
-                },
+          child: Column(
+            children: [
+              const CurrentBalanceWidget(),
+              const SizedBox(
+                height: 20,
               ),
-            );
-          },
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    " Recent Transactions",
+                    style: AppTextStyle.body1,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        goToViewMore(context);
+                      },
+                      child: const Icon(
+                        Icons.format_list_bulleted_rounded,
+                        size: 30,
+                      )),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ValueListenableBuilder(
+                valueListenable: TransactionDB.instance.transactionListNotifier,
+                builder:
+                    (BuildContext context, List<TransactionModel> newList, _) {
+                  return Expanded(
+                      child: newList.isNotEmpty
+                          ? ListView.builder(
+                              itemCount:
+                                  newList.length >= 4 ? 4 : newList.length,
+                              itemBuilder: (ctx, index) {
+                                final data = newList[index];
+                                return Slidable(
+                                  key: Key(data.id!),
+                                  endActionPane: ActionPane(
+                                    motion: const DrawerMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        onPressed: (ctx) {
+                                          log("sample edit");
+                                          editTransaction(
+                                            newList[index],
+                                          );
+                                        },
+                                        icon: Icons.edit,
+                                        backgroundColor: Colors.green,
+                                        label: "Edit",
+                                      ),
+                                      SlidableAction(
+                                        onPressed: (context) {
+                                          log("sample delete");
+
+                                          deleteTransaction(context, data);
+                                        },
+                                        icon: Icons.delete,
+                                        backgroundColor: Colors.red,
+                                        label: "Delete",
+                                      ),
+                                    ],
+                                  ),
+                                  child: TransactionCardWidget(
+                                    iconColor: data.type == CategoryType.income
+                                        ? Colors.green
+                                        : Colors.red,
+                                    amount: data.amount,
+                                    dateTime: data.dateTime,
+                                    purposeText: data.categoryModel.name,
+                                    descriptionText: "(${data.description})",
+                                    iconData: data.type == CategoryType.income
+                                        ? Icons.arrow_circle_up_outlined
+                                        : Icons.arrow_circle_down_outlined,
+                                  ),
+                                );
+                              })
+                          : const Center(child: Text("No Transactions !")));
+                },
+              )
+            ],
           ),
         ),
-        bottomNavigationBar: CurvedNavigationWidget()
-        // const BottomNavigationbarWidget(),
-        );
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF0B1C3B),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) {
+                return const AddTransactionScreen();
+              },
+            ),
+          );
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
+      // bottomNavigationBar: CurvedNavigationWidget()
+      // const BottomNavigationbarWidget(),
+    );
   }
 
   void goToViewMore(context) {
