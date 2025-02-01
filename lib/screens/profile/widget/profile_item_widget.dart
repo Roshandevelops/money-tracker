@@ -107,7 +107,6 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
               shareText();
             },
             iconData: Icons.share),
-        Text("testing"),
         const SizedBox(
           height: 20,
         ),
