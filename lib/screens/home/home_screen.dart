@@ -10,8 +10,6 @@ import 'package:money_tracker/screens/transactions/add_transaction/add_transacti
 import 'package:money_tracker/screens/transactions/view_transactions/transactions.dart';
 import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
-import 'package:money_tracker/widgets/bottom_navigationbar_widget.dart';
-import 'package:money_tracker/widgets/curved_navigation_bar.dart';
 import 'package:money_tracker/widgets/edit_screen.dart';
 import 'package:money_tracker/widgets/list_view_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';

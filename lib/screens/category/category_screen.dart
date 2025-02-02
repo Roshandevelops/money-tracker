@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:money_tracker/db/category/category_db.dart';
+import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
+import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/bottom_navigationbar_widget.dart';
-import 'package:money_tracker/widgets/curved_navigation_bar.dart';
 import 'package:money_tracker/widgets/income_expense_radio_button.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
 
@@ -78,12 +79,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Colors.grey,
+                                    color: const Color(0xFF0B1C3B),
                                   ),
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: Text(
                                       categoryList.name,
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -97,16 +99,73 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         builder: (ctx) {
                                           return AlertDialog(
                                             backgroundColor: Colors.white,
-                                            title: const Text("Delete Item"),
-                                            content: const Text(
-                                                "Are you sure,you want to Delete ?"),
+                                            title: const Text("Delete Item !"),
+                                            content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  "Are you sure ?",
+                                                  style: AppTextStyle.body1,
+                                                ),
+                                                const Text(
+                                                    "Do you want to Delete ?")
+                                              ],
+                                            ),
                                             actions: [
                                               MaterialButton(
-                                                onPressed: () {
+                                                onPressed: () async {
+                                                  bool hasTransaction =
+                                                      await checkIfCategoryHasTransactions(
+                                                          categoryList.id);
+                                                  if (hasTransaction) {
+                                                    if (context.mounted) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          showCloseIcon: true,
+
+                                                          duration:
+                                                              const Duration(
+                                                                  seconds: 4),
+                                                          backgroundColor:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  46,
+                                                                  45,
+                                                                  45),
+
+                                                          // padding:
+                                                          //     EdgeInsets.all(20),
+                                                          content: Column(
+                                                            children: [
+                                                              Text(
+                                                                "Can't delete    '${categoryList.name}' ",
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            18),
+                                                              ),
+                                                              Text(
+                                                                  "Delete  '${categoryList.name}'  transaction first !!")
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }
+
+                                                    if (context.mounted) {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      return;
+                                                    }
+                                                  }
                                                   CategoryDB.instance
                                                       .deleteCategory(
                                                           categoryList.id);
-                                                  Navigator.of(context).pop();
+                                                  if (context.mounted) {
+                                                    Navigator.of(context).pop();
+                                                  }
                                                 },
                                                 child: const Text("Yes"),
                                               ),
@@ -121,7 +180,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         },
                                       );
                                     },
-                                    icon: const Icon(Icons.delete),
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Color(0xFFC8C5C5),
+                                    ),
                                   ),
                                 )
                               ]),
@@ -263,5 +325,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
       }
     }
     return false;
+  }
+
+  Future<bool> checkIfCategoryHasTransactions(String categoryId) async {
+    final transactions = await TransactionDB.instance.getAllTransactions();
+    return transactions
+        .any((transaction) => transaction.categoryModel.id == categoryId);
   }
 }

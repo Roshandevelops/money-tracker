@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -102,13 +101,11 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
           height: 20,
         ),
         ProfileWidget(
-            text: "Share",
-            onTap: () {
-              shareText();
-            },
-            iconData: Icons.share),
-        const SizedBox(
-          height: 20,
+          text: "Share",
+          onTap: () {
+            shareText();
+          },
+          iconData: Icons.share,
         ),
       ],
     );

@@ -37,40 +37,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: formKey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                Image.asset(
-                  "assets/images/what-is-transactions-types-of-accounting-transactions.webp",
-                ),
-                TextFormFieldWidget(
-                  inputFormatters: [LengthLimitingTextInputFormatter(20)],
-                  validator: (p0) {
-                    if (isDataMatched && textController.text.isNotEmpty) {
-                      log("data matching");
-                      return null;
-                    } else {
-                      log("data not matching");
-                      return "Enter Username";
-                    }
-                  },
-                  hintText: "Username",
-                  textController: textController,
-                ),
-                const SizedBox(
-                  height: 140,
-                ),
-                ButtonWidget(
-                  onTap: () {
-                    formKey.currentState!.validate();
-                    goToHome(context, textController);
-                  },
-                  text: "Continue",
-                  color: const Color(0xFF0B1C3B),
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Image.asset(
+                    "assets/images/what-is-transactions-types-of-accounting-transactions.webp",
+                  ),
+                  TextFormFieldWidget(
+                    inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                    validator: (p0) {
+                      if (isDataMatched && textController.text.isNotEmpty) {
+                        log("data matching");
+                        return null;
+                      } else {
+                        log("data not matching");
+                        return "Enter Username";
+                      }
+                    },
+                    hintText: "Username",
+                    textController: textController,
+                  ),
+                  const SizedBox(
+                    height: 140,
+                  ),
+                  ButtonWidget(
+                    onTap: () {
+                      formKey.currentState!.validate();
+                      goToHome(context, textController);
+                    },
+                    text: "Continue",
+                    color: const Color(0xFF0B1C3B),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
