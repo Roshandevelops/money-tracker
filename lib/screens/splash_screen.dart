@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:money_tracker/main.dart';
 import 'package:money_tracker/screens/register_screen/register_screen.dart';
+import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/bottom_navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,7 +33,47 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+        //  Scaffold(
+        //   backgroundColor: Colors.white,
+        //   body: Container(
+        //     decoration: BoxDecoration(
+        //         gradient: LinearGradient(
+        //             begin: Alignment.topCenter,
+        //             end: Alignment.bottomCenter,
+        //             colors: [
+        //           Color(0xFF0B1C3B),
+        //           Color(0xE98CA1CA),
+        //           Color(0xFF0B1C3B),
+        //         ])),
+        //     child: Center(
+        //       child: Animate(
+        //         onPlay: (controller) {
+        //           controller.repeat();
+        //         },
+        //         effects: [
+        //           ScaleEffect(curve: Curves.easeInCubic),
+        //         ],
+        //         child: Text(
+        //           "Money Tracker",
+        //           style: AppTextStyle.body1,
+        //         ),
+        //       )
+        //           .fade(
+        //             duration: Duration(seconds: 3),
+        //           )
+        //           .tint(
+        //             color: const Color(0xFF0B1C3B),
+        //           )
+        //           .then()
+        //           .addEffect(
+        //             SaturateEffect(),
+        //           ),
+        //     ),
+        //   ),
+        // );
+
+        Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -99,3 +141,29 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 }
+
+// Scaffold(
+//       backgroundColor: Colors.white,
+//       body: SafeArea(
+//         child: Center(
+//           child: Animate(
+//             onPlay: (controller) {
+//               controller.repeat();
+//             },
+//             effects: [ScaleEffect(), FadeEffect()],
+//             child: Text(
+//               "Money tracker",
+//               style: AppTextStyle.body1,
+//             ),
+//           )
+//               .fade(
+//                 duration: Duration(seconds: 4),
+//               )
+//               .tint(color: Colors.red)
+//               .then()
+//               .addEffect(
+//                 SaturateEffect(),
+//               ),
+//         ),
+//       ),
+//     );

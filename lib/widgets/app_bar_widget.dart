@@ -19,7 +19,15 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: leading,
-      actions: [IconButton(onPressed: onPressed, icon: Icon(iconData))],
+      actions: [
+        IconButton(
+          onPressed: onPressed,
+          icon: Icon(
+            iconData,
+            size: 25,
+          ),
+        ),
+      ],
       title: Text(title ?? ""),
       backgroundColor: const Color(0xFF0B1C3B),
       foregroundColor: Colors.white,
