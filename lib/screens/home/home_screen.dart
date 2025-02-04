@@ -24,13 +24,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedCategoryGroupValue = 1;
-
   String newName = "";
 
   @override
   void initState() {
     showString();
-
     super.initState();
   }
 
@@ -81,55 +79,58 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder:
                     (BuildContext context, List<TransactionModel> newList, _) {
                   return Expanded(
-                      child: newList.isNotEmpty
-                          ? ListView.builder(
-                              itemCount:
-                                  newList.length >= 4 ? 4 : newList.length,
-                              itemBuilder: (ctx, index) {
-                                final data = newList[index];
-                                return Slidable(
-                                  key: Key(data.id!),
-                                  endActionPane: ActionPane(
-                                    motion: const DrawerMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        onPressed: (ctx) {
-                                          log("sample edit");
-                                          editTransaction(
-                                            newList[index],
-                                          );
-                                        },
-                                        icon: Icons.edit,
-                                        backgroundColor: Colors.green,
-                                        label: "Edit",
-                                      ),
-                                      SlidableAction(
-                                        onPressed: (context) {
-                                          log("sample delete");
+                    child: newList.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: newList.length >= 4 ? 4 : newList.length,
+                            itemBuilder: (ctx, index) {
+                              final data = newList[index];
+                              return Slidable(
+                                key: Key(data.id!),
+                                endActionPane: ActionPane(
+                                  motion: const DrawerMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (ctx) {
+                                        log("sample edit");
+                                        editTransaction(
+                                          newList[index],
+                                        );
+                                      },
+                                      icon: Icons.edit,
+                                      backgroundColor: Colors.green,
+                                      label: "Edit",
+                                    ),
+                                    SlidableAction(
+                                      onPressed: (context) {
+                                        log("sample delete");
 
-                                          deleteTransaction(context, data);
-                                        },
-                                        icon: Icons.delete,
-                                        backgroundColor: Colors.red,
-                                        label: "Delete",
-                                      ),
-                                    ],
-                                  ),
-                                  child: TransactionCardWidget(
-                                    iconColor: data.type == CategoryType.income
-                                        ? Colors.green
-                                        : Colors.red,
-                                    amount: data.amount,
-                                    dateTime: data.dateTime,
-                                    purposeText: data.categoryModel.name,
-                                    descriptionText: "(${data.description})",
-                                    iconData: data.type == CategoryType.income
-                                        ? Icons.arrow_circle_up_outlined
-                                        : Icons.arrow_circle_down_outlined,
-                                  ),
-                                );
-                              })
-                          : const Center(child: Text("No Transactions !")));
+                                        deleteTransaction(context, data);
+                                      },
+                                      icon: Icons.delete,
+                                      backgroundColor: Colors.red,
+                                      label: "Delete",
+                                    ),
+                                  ],
+                                ),
+                                child: TransactionCardWidget(
+                                  iconColor: data.type == CategoryType.income
+                                      ? Colors.green
+                                      : Colors.red,
+                                  amount: data.amount,
+                                  dateTime: data.dateTime,
+                                  purposeText: data.categoryModel.name,
+                                  descriptionText: "(${data.description})",
+                                  iconData: data.type == CategoryType.income
+                                      ? Icons.arrow_circle_up_outlined
+                                      : Icons.arrow_circle_down_outlined,
+                                ),
+                              );
+                            },
+                          )
+                        : const Center(
+                            child: Text("No Transactions !"),
+                          ),
+                  );
                 },
               )
             ],
@@ -152,8 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Colors.white,
         ),
       ),
-      // bottomNavigationBar: CurvedNavigationWidget()
-      // const BottomNavigationbarWidget(),
     );
   }
 

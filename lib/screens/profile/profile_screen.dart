@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/screens/profile/widget/profile_item_widget.dart';
-
 import 'package:money_tracker/widgets/app_bar_widget.dart';
-import 'package:money_tracker/widgets/bottom_navigationbar_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
