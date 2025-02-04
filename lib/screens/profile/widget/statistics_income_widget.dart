@@ -35,8 +35,6 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
     super.initState();
   }
 
-  // alight motion
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,13 +45,9 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
             const SizedBox(
               height: 100,
             ),
-            // dataMap == {}
-            //     ? Text("data")
-            //     :
             dataMap.isEmpty
                 ? const Center(child: Text("Empty Data !"))
                 : PieChart(
-                    // totalValue: 20,
                     ringStrokeWidth: 50,
                     chartRadius: 200,
                     animationDuration: const Duration(seconds: 2),
@@ -63,11 +57,17 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
                       Colors.yellow,
                       Colors.blueGrey,
                       Colors.orange,
-                      Colors.pink,
                       Colors.tealAccent,
-                      Colors.blueGrey,
                       Colors.brown,
                       Colors.purple,
+                      Color(0xFF2C452D),
+                      Color(0xFFBFB562),
+                      Color(0xFF293237),
+                      Colors.pink,
+                      Color(0xFF7E5517),
+                      Color(0xFF0F5F4C),
+                      Color(0xFF9D4E31),
+                      Color(0xFF601B6C),
                     ],
                     chartValuesOptions: const ChartValuesOptions(
                         showChartValues: true,
@@ -75,11 +75,12 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
                         showChartValuesInPercentage: false,
                         showChartValueBackground: false),
                     legendOptions: const LegendOptions(
-                        showLegends: true,
-                        showLegendsInRow: true,
-                        legendShape: BoxShape.circle,
-                        legendPosition: LegendPosition.bottom),
-                    chartType: ChartType.ring,
+                      showLegends: true,
+                      showLegendsInRow: true,
+                      legendShape: BoxShape.circle,
+                      legendPosition: LegendPosition.bottom,
+                    ),
+                    chartType: ChartType.disc,
                   ),
           ],
         ),

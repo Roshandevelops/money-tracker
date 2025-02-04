@@ -10,28 +10,23 @@ import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({
-    super.key,
-  });
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-bool isDataMatched = true;
-
 class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController textController = TextEditingController();
+  bool isDataMatched = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      appBar: const AppBarWidget(
-        actions: [],
-      ),
+      appBar: const AppBarWidget(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -45,6 +40,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Image.asset(
                     "assets/images/what-is-transactions-types-of-accounting-transactions.webp",
+                    height: 200,
+                    width: 300,
+                  ),
+                  const SizedBox(
+                    height: 100,
                   ),
                   TextFormFieldWidget(
                     inputFormatters: [LengthLimitingTextInputFormatter(20)],

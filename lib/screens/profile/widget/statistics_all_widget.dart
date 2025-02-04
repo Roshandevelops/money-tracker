@@ -40,7 +40,6 @@ class _StatisticsAllWidgetState extends State<StatisticsAllWidget> {
               chartRadius: 200,
               animationDuration: const Duration(seconds: 2),
               dataMap: dataMap,
-              // colorList: const [Colors.green, Colors.red],
               chartValuesOptions: const ChartValuesOptions(
                   showChartValues: true,
                   showChartValuesOutside: true,
@@ -49,7 +48,7 @@ class _StatisticsAllWidgetState extends State<StatisticsAllWidget> {
               legendOptions: const LegendOptions(
                   showLegends: true,
                   showLegendsInRow: true,
-                  legendShape: BoxShape.rectangle,
+                  legendShape: BoxShape.circle,
                   legendPosition: LegendPosition.bottom),
               gradientList: const [
                 [Colors.green, Color.fromRGBO(113, 173, 115, 1), Colors.green],
@@ -59,7 +58,7 @@ class _StatisticsAllWidgetState extends State<StatisticsAllWidget> {
                   Color.fromARGB(255, 170, 30, 20),
                 ],
               ],
-              chartType: ChartType.ring,
+              chartType: ChartType.disc,
             ),
           ],
         ),

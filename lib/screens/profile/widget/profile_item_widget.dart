@@ -40,16 +40,13 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
       children: [
         ProfileWidget(
             text: "Change Username",
-            onTap: () {
+            onPressed: () {
               changeUserName(context, userNameController);
             },
             iconData: Icons.person),
-        const SizedBox(
-          height: 20,
-        ),
         ProfileWidget(
             text: "Statistics",
-            onTap: () {
+            onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (ctx) {
@@ -59,50 +56,21 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
               );
             },
             iconData: Icons.format_indent_increase_rounded),
-        const SizedBox(
-          height: 20,
-        ),
         ProfileWidget(
             text: "Help Centre",
-            onTap: () async {
-              String? encodeQueryParameters(Map<String, String> params) {
-                return params.entries
-                    .map((MapEntry<String, String> e) =>
-                        '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-                    .join('&');
-              }
-
-              final Uri emailUri = Uri(
-                scheme: "mailto",
-                path: 'roshanudemy123@gmail.com',
-                query: encodeQueryParameters(<String, String>{
-                  // 'subject': 'Example Subject & Symbols are allowed!',
-                  // 'body': 'enter matter',
-                }),
-              );
-
-              if (await canLaunchUrl(emailUri)) {
-                launchUrl(emailUri);
-              } else {
-                throw Exception('couldnt launch');
-              }
+            onPressed: () async {
+              helpCenter();
             },
             iconData: Icons.help),
-        const SizedBox(
-          height: 20,
-        ),
         ProfileWidget(
             text: "Reset",
-            onTap: () {
+            onPressed: () {
               resetDialogueBox();
             },
             iconData: Icons.restore),
-        const SizedBox(
-          height: 20,
-        ),
         ProfileWidget(
           text: "Share",
-          onTap: () {
+          onPressed: () {
             shareText();
           },
           iconData: Icons.share,
@@ -110,8 +78,6 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
       ],
     );
   }
-
-  // CHANGE USERNAME................./////////////////////////////////////////
 
   void changeUserName(
       BuildContext context, TextEditingController userNameController) {
@@ -167,10 +133,6 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
     }
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////
-
-  //RESET APPLICATION.........................../////////////////////////////////////
-
   void resetDialogueBox() {
     showDialog(
       context: context,
@@ -220,6 +182,32 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
     );
   }
 
+  void helpCenter() async {
+    String? encodeQueryParameters(Map<String, String> params) {
+      return params.entries
+          .map((MapEntry<String, String> e) =>
+              '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+          .join('&');
+    }
+
+    final Uri emailUri = Uri(
+      scheme: "mailto",
+      path: 'roshanudemy123@gmail.com',
+      query: encodeQueryParameters(
+        <String, String>{
+          // 'subject': 'Example Subject & Symbols are allowed!',
+          // 'body': 'enter matter',
+        },
+      ),
+    );
+
+    if (await canLaunchUrl(emailUri)) {
+      launchUrl(emailUri);
+    } else {
+      throw Exception('couldnt launch');
+    }
+  }
+
   void resetApp() async {
     final transactions =
         await Hive.openBox<TransactionModel>(transactionDbName);
@@ -252,5 +240,3 @@ class _ProfileItemWidgetState extends State<ProfileItemWidget> {
     log("Text shared scuccessfully");
   }
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////

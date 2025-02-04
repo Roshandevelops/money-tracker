@@ -5,7 +5,6 @@ import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
-import 'package:money_tracker/widgets/bottom_navigationbar_widget.dart';
 import 'package:money_tracker/widgets/income_expense_radio_button.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
 
@@ -85,7 +84,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     alignment: Alignment.center,
                                     child: Text(
                                       categoryList.name,
-                                      style: TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -124,19 +124,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           .showSnackBar(
                                                         SnackBar(
                                                           showCloseIcon: true,
-
                                                           duration:
                                                               const Duration(
                                                                   seconds: 4),
                                                           backgroundColor:
-                                                              Color.fromARGB(
-                                                                  255,
-                                                                  46,
-                                                                  45,
-                                                                  45),
-
-                                                          // padding:
-                                                          //     EdgeInsets.all(20),
+                                                              const Color
+                                                                  .fromARGB(255,
+                                                                  46, 45, 45),
                                                           content: Column(
                                                             children: [
                                                               Text(

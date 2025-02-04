@@ -39,8 +39,8 @@ class CurrentBalanceWidget extends StatelessWidget {
             ValueListenableBuilder(
               valueListenable: TransactionDB.instance.currentBalance,
               builder: (context, value, child) {
-                return AmountIcon(
-                  image: "assets/images/amounticon.jpg",
+                return AmountCurrency(
+                  currencySymbol: "₹",
                   amount: value,
                 );
               },
@@ -48,40 +48,45 @@ class CurrentBalanceWidget extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IncomeExpense(
-                  color: Colors.green,
-                  text: "Income",
-                  iconData: Icons.arrow_circle_up_outlined,
-                ),
-                IncomeExpense(
-                  text: "Expense",
-                  iconData: Icons.arrow_circle_down_outlined,
-                  color: Colors.red,
-                ),
-              ],
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ValueListenableBuilder(
-                    valueListenable: TransactionDB.instance.totalIncome,
-                    builder: (context, value, child) {
-                      return AmountIcon(
-                        amount: value,
-                        image: "assets/images/amounticon.jpg",
-                      );
-                    }),
-                ValueListenableBuilder(
-                    valueListenable: TransactionDB.instance.totalExpense,
-                    builder: (context, value, child) {
-                      return AmountIcon(
-                        amount: value,
-                        image: "assets/images/amounticon.jpg",
-                      );
-                    }),
+                Column(
+                  children: [
+                    const IncomeExpense(
+                      color: Colors.green,
+                      text: "Income",
+                      iconData: Icons.arrow_circle_up_outlined,
+                    ),
+                    ValueListenableBuilder(
+                      valueListenable: TransactionDB.instance.totalIncome,
+                      builder: (context, value, child) {
+                        return AmountCurrency(
+                          amount: value,
+                          currencySymbol: "₹",
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const IncomeExpense(
+                      text: "Expense",
+                      iconData: Icons.arrow_circle_down_outlined,
+                      color: Colors.red,
+                    ),
+                    ValueListenableBuilder(
+                      valueListenable: TransactionDB.instance.totalExpense,
+                      builder: (context, value, child) {
+                        return AmountCurrency(
+                          amount: value,
+                          currencySymbol: "₹",
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ],
