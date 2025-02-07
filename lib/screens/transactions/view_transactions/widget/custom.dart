@@ -6,10 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/edit_screen.dart';
 import 'package:money_tracker/widgets/list_view_widget.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
+import 'package:provider/provider.dart';
 
 class CustomList extends StatefulWidget {
   const CustomList({super.key, required this.isIncomeSelected});
@@ -53,15 +55,14 @@ class _CustomListState extends State<CustomList> {
         const SizedBox(
           height: 20,
         ),
-        ValueListenableBuilder(
-          valueListenable: TransactionDB.instance.transactionListNotifier,
-          builder: (BuildContext context, List<TransactionModel> newList, _) {
+        Consumer<TransactionProvider>(
+          builder: (context, helloValue, child) {
             if (widget.isIncomeSelected == true) {
-              sampleListAll = newList.where((element) {
+              sampleListAll = helloValue.transactionList.where((element) {
                 return element.type == CategoryType.income;
               }).toList();
             } else {
-              sampleListAll = newList.where((element) {
+              sampleListAll = helloValue.transactionList.where((element) {
                 return element.type == CategoryType.expense;
               }).toList();
             }

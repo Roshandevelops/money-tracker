@@ -1,17 +1,18 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/main.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/transactions/add_transaction/add_transaction.dart';
 import 'package:money_tracker/screens/transactions/view_transactions/transactions.dart';
 import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/edit_screen.dart';
 import 'package:money_tracker/widgets/list_view_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'widget/current_balance_widget.dart';
 
@@ -34,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TransactionDB.instance.transactionRefreshUI();
-    CategoryDB.instance.categoryRefreshUI();
+    // TransactionDB.instance.transactionRefreshUI();
+    // CategoryDB.instance.categoryRefreshUI();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
@@ -74,16 +75,16 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 20,
               ),
-              ValueListenableBuilder(
-                valueListenable: TransactionDB.instance.transactionListNotifier,
-                builder:
-                    (BuildContext context, List<TransactionModel> newList, _) {
+              Consumer<TransactionProvider>(
+                builder: (context, helloValue, child) {
                   return Expanded(
-                    child: newList.isNotEmpty
+                    child: helloValue.transactionList.isNotEmpty
                         ? ListView.builder(
-                            itemCount: newList.length >= 4 ? 4 : newList.length,
+                            itemCount: helloValue.transactionList.length >= 4
+                                ? 4
+                                : helloValue.transactionList.length,
                             itemBuilder: (ctx, index) {
-                              final data = newList[index];
+                              final data = helloValue.transactionList[index];
                               return Slidable(
                                 key: Key(data.id!),
                                 endActionPane: ActionPane(
@@ -93,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onPressed: (ctx) {
                                         log("sample edit");
                                         editTransaction(
-                                          newList[index],
+                                          helloValue.transactionList[index],
                                         );
                                       },
                                       icon: Icons.edit,

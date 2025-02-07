@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/db/category/category_db.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
+
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
 
 class StatisticsIncomeWidget extends StatefulWidget {
   const StatisticsIncomeWidget({super.key});
@@ -20,7 +22,10 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
       final categoryName =
           CategoryDB.instance.incomeCategoryListListener.value[i].name;
 
-      final transactions = TransactionDB.instance.transactionListNotifier.value
+      final transactions = Provider.of<TransactionProvider>(context)
+          .transactionList
+          //  TransactionDB.instance.transactionListNotifier.value
+
           .where((e) => e.categoryModel.name == categoryName)
           .toList();
 

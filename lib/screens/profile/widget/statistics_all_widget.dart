@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
 
 class StatisticsAllWidget extends StatefulWidget {
   const StatisticsAllWidget({super.key});
@@ -16,10 +17,12 @@ class _StatisticsAllWidgetState extends State<StatisticsAllWidget> {
   void initState() {
     dataMap = {
       "Income": double.parse(
-        "${TransactionDB.instance.totalIncome.value}",
+        "${Provider.of<TransactionProvider>(context).totalIncome}",
       ),
       "Expense": double.parse(
-        "${TransactionDB.instance.totalExpense.value}",
+        "${Provider.of<TransactionProvider>(context).totalExpense
+        // TransactionDB.instance.totalExpense.value
+        }",
       ),
     };
     super.initState();
