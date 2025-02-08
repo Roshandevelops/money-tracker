@@ -22,12 +22,13 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
       final categoryName =
           CategoryDB.instance.incomeCategoryListListener.value[i].name;
 
-      final transactions = Provider.of<TransactionProvider>(context)
-          .transactionList
-          //  TransactionDB.instance.transactionListNotifier.value
+      final transactions =
+          Provider.of<TransactionProvider>(context, listen: false)
+              .transactionList
+              //  TransactionDB.instance.transactionListNotifier.value
 
-          .where((e) => e.categoryModel.name == categoryName)
-          .toList();
+              .where((e) => e.categoryModel.name == categoryName)
+              .toList();
 
       final amountList = transactions.map((e) => e.amount).toList();
 

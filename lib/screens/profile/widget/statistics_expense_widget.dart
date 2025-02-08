@@ -23,7 +23,9 @@ class _StatisticsExpenseWidgetState extends State<StatisticsExpenseWidget> {
       final categoryName =
           CategoryDB.instance.expenseCategoryListListener.value[i].name;
       final transactions =
-          Provider.of<TransactionProvider>(context).transactionList.where(
+          Provider.of<TransactionProvider>(context, listen: false)
+              .transactionList
+              .where(
         (e) {
           return e.categoryModel.name == categoryName;
         },

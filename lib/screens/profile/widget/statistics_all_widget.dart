@@ -17,10 +17,10 @@ class _StatisticsAllWidgetState extends State<StatisticsAllWidget> {
   void initState() {
     dataMap = {
       "Income": double.parse(
-        "${Provider.of<TransactionProvider>(context).totalIncome}",
+        "${Provider.of<TransactionProvider>(context, listen: false).totalIncome}",
       ),
       "Expense": double.parse(
-        "${Provider.of<TransactionProvider>(context).totalExpense
+        "${Provider.of<TransactionProvider>(context, listen: false).totalExpense
         // TransactionDB.instance.totalExpense.value
         }",
       ),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/main.dart';
 import 'package:money_tracker/models/category/category_model.dart';
@@ -29,14 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    Provider.of<TransactionProvider>(context, listen: false)
+        .refreshTransactions();
     showString();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TransactionDB.instance.transactionRefreshUI();
-    // CategoryDB.instance.categoryRefreshUI();
+    Provider.of<TransactionProvider>(context).refreshTransactions();
+    CategoryDB.instance.categoryRefreshUI();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
@@ -246,6 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextButton(
                   onPressed: () async {
                     await TransactionDB.instance.deleteTransaction(model);
+
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }

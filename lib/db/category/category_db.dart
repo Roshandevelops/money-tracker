@@ -47,22 +47,6 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
     incomeCategoryListListener.value.clear();
     expenseCategoryListListener.value.clear();
 
-    // allCategories.map(
-    //   (e) {
-    //     if (e.type == CategoryType.income) {
-    //       incomeCategoryListListener.value.add(e);
-    //     } else {
-    //       expenseCategoryListListener.value.add(e);
-    //     }
-    //     return e;
-    //   },
-    // );
-
-    // incomeCategoryListListener.notifyListeners();
-    // expenseCategoryListListener.notifyListeners();
-
-    //other method
-
     for (int i = 0; i < allCategories.length; i++) {
       if (allCategories[i].type == CategoryType.income) {
         incomeCategoryListListener.value.add(allCategories[i]);
@@ -73,20 +57,5 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
 
     incomeCategoryListListener.notifyListeners();
     expenseCategoryListListener.notifyListeners();
-
-    //other method
-
-    // await Future.forEach(
-    //   allCategories,
-    //   (CategoryModel category) {
-    //     if (category.type == CategoryType.income) {
-    //       incomeCategoryListListener.value.add(category);
-    //     } else {
-    //       expenseCategoryListListener.value.add(category);
-    //     }
-    //   },
-    // );
-    // incomeCategoryListListener.notifyListeners();
-    // expenseCategoryListListener.notifyListeners();
   }
 }

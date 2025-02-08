@@ -26,13 +26,13 @@ class _SearchScreenState extends State<SearchScreen> {
   List<TransactionModel> filteredList = [];
   @override
   void initState() {
-    setState(
-      () {
-        filteredList =
-            Provider.of<TransactionProvider>(context).transactionList;
-        //  TransactionDB.instance.transactionListNotifier.value;
-      },
-    );
+    // setState(
+    //   () {
+    filteredList = Provider.of<TransactionProvider>(context, listen: false)
+        .transactionList;
+    //  TransactionDB.instance.transactionListNotifier.value;
+    // },
+    // );
     super.initState();
   }
 
