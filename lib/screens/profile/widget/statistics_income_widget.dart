@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/db/category/category_db.dart';
+import 'package:money_tracker/provider/category_provider.dart';
 
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -17,10 +18,17 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
   @override
   void initState() {
     for (int i = 0;
-        i < CategoryDB.instance.incomeCategoryListListener.value.length;
+        i <
+            Provider.of<CategoryProvider>(context, listen: false)
+                .incomeCategoryList
+                .length;
+        //  CategoryDB.instance.incomeCategoryListListener.value.length;
+
         i++) {
-      final categoryName =
-          CategoryDB.instance.incomeCategoryListListener.value[i].name;
+      final categoryName = Provider.of<CategoryProvider>(context, listen: false)
+          .incomeCategoryList[i]
+          .name;
+      // CategoryDB.instance.incomeCategoryListListener.value[i].name;
 
       final transactions =
           Provider.of<TransactionProvider>(context, listen: false)

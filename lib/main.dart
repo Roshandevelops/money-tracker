@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/category_provider.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) {
             return TransactionProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return CategoryProvider();
           },
         ),
       ],

@@ -17,10 +17,10 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
     return CategoryDB.instance;
   }
 
-  ValueNotifier<List<CategoryModel>> incomeCategoryListListener =
-      ValueNotifier([]);
-  ValueNotifier<List<CategoryModel>> expenseCategoryListListener =
-      ValueNotifier([]);
+  // ValueNotifier<List<CategoryModel>> incomeCategoryListListener =
+  //     ValueNotifier([]);
+  // ValueNotifier<List<CategoryModel>> expenseCategoryListListener =
+  //     ValueNotifier([]);
 
   @override
   Future<void> insertCategory(CategoryModel categoryModelValue) async {
@@ -42,20 +42,22 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
     categoryRefreshUI();
   }
 
-  Future<void> categoryRefreshUI() async {
+  Future<List> categoryRefreshUI() async {
     final allCategories = await getCategories();
-    incomeCategoryListListener.value.clear();
-    expenseCategoryListListener.value.clear();
+    // incomeCategoryList.value.clear();
+    // expenseCategoryList.value.clear();
 
-    for (int i = 0; i < allCategories.length; i++) {
-      if (allCategories[i].type == CategoryType.income) {
-        incomeCategoryListListener.value.add(allCategories[i]);
-      } else {
-        expenseCategoryListListener.value.add(allCategories[i]);
-      }
-    }
+    // for (int i = 0; i < allCategories.length; i++) {
+    //   if (allCategories[i].type == CategoryType.income) {
+    //     incomeCategoryList.value.add(allCategories[i]);
+    //   } else {
+    //     expenseCategoryList.value.add(allCategories[i]);
+    //   }
+    // }
 
-    incomeCategoryListListener.notifyListeners();
-    expenseCategoryListListener.notifyListeners();
+    // incomeCategoryList.notifyListeners();
+    // expenseCategoryList.notifyListeners();
+
+    return allCategories;
   }
 }

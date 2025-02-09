@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
+import 'package:money_tracker/provider/category_provider.dart';
+import 'package:provider/provider.dart';
 
 class DropDownWidget extends StatelessWidget {
   const DropDownWidget({
@@ -39,9 +41,13 @@ class DropDownWidget extends StatelessWidget {
           ),
         ),
         items: (selectedCategoryType == CategoryType.income
-                ? CategoryDB.instance.incomeCategoryListListener
-                : CategoryDB.instance.expenseCategoryListListener)
-            .value
+                ? Provider.of<CategoryProvider>(context).incomeCategoryList
+                // CategoryDB.instance.incomeCategoryListListener
+
+                : Provider.of<CategoryProvider>(context).expenseCategoryList
+            //  CategoryDB.instance.expenseCategoryListListener
+            )
+            // .value
             .map(
           (e) {
             return DropdownMenuItem(
