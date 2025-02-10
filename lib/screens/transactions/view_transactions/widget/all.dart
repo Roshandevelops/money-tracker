@@ -174,6 +174,8 @@ class _AllListState extends State<AllList> {
                 TextButton(
                   onPressed: () async {
                     await TransactionDB.instance.deleteTransaction(model);
+                    await Provider.of<TransactionProvider>(ctx, listen: false)
+                        .refreshTransactions();
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }

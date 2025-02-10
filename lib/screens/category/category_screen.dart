@@ -22,7 +22,8 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
-    CategoryDB().categoryRefreshUI();
+    Provider.of<CategoryProvider>(context, listen: false).refreshCategory();
+    // CategoryDB().categoryRefreshUI();
     super.initState();
   }
 
@@ -32,7 +33,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<CategoryProvider>(context).refreshCategory();
     final TextEditingController alertBoxController = TextEditingController();
+
     return Scaffold(
       appBar: const AppBarWidget(
         title: "Categories",
@@ -162,18 +165,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     return;
                                                   }
                                                 }
-                                                CategoryDB.instance
+                                                await CategoryDB.instance
                                                     .deleteCategory(
                                                         categoryList.id);
-                                                if (context.mounted) {
-                                                  Navigator.of(context).pop();
+                                                if (ctx.mounted) {
+                                                  await Provider.of<
+                                                              CategoryProvider>(
+                                                          ctx,
+                                                          listen: false)
+                                                      .refreshCategory();
+
+                                                  if (ctx.mounted) {
+                                                    Navigator.of(ctx).pop();
+                                                  }
                                                 }
                                               },
                                               child: const Text("Yes"),
                                             ),
                                             MaterialButton(
                                               onPressed: () {
-                                                Navigator.pop(context);
+                                                Navigator.pop(ctx);
                                               },
                                               child: const Text("No"),
                                             )
@@ -268,17 +279,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   "Category   '$alertController'   already exists!";
                             },
                           );
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //   const SnackBar(
-                          //     duration: Duration(seconds: 5),
-                          //     padding: EdgeInsets.all(20),
-                          //     backgroundColor: Colors.red,
-                          //     behavior: SnackBarBehavior.floating,
-                          //     content: Align(
-                          //         alignment: Alignment.center,
-                          //         child: Text("Already Exist")),
-                          //   ),
-                          // );
                         }
 
                         return;
@@ -293,9 +293,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         id: DateTime.now().microsecondsSinceEpoch.toString(),
                       );
                       await CategoryDB.instance.insertCategory(category);
+
                       alertBoxController.clear();
 
                       if (context.mounted) {
+                        Provider.of<CategoryProvider>(context, listen: false)
+                            .refreshCategory();
+
                         Navigator.of(ctx).pop();
                       }
                     },
@@ -304,7 +308,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         const Text("Add Item"),
                         MaterialButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+
                             alertBoxController.clear();
                           },
                           child: const Text("Cancel"),

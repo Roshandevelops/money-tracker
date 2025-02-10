@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
+import 'package:provider/provider.dart';
 
 const String transactionDbName = "TRANSACTION_DB_NAME";
 
@@ -48,20 +50,6 @@ class TransactionDB extends ChangeNotifier implements TransactionDbFunctions {
     );
 
     return transactionList;
-
-    // transactionList.map(
-    //   (e) {
-    //     if (e.type == CategoryType.income) {
-    //       totalIncome.value = totalIncome.value + e.amount;
-    //     } else {
-    //       totalExpense.value = totalExpense.value + e.amount;
-    //     }
-    //     return e;
-    //   },
-    // );
-
-    // totalIncome.notifyListeners();
-    // totalExpense.notifyListeners();
   }
 
   @override
@@ -72,9 +60,7 @@ class TransactionDB extends ChangeNotifier implements TransactionDbFunctions {
   }
 
   @override
-  Future<void> deleteTransaction(
-    TransactionModel model,
-  ) async {
+  Future<void> deleteTransaction(TransactionModel model) async {
     await model.deleteTransactionSample();
     await transactionRefreshUI();
   }
@@ -84,10 +70,5 @@ class TransactionDB extends ChangeNotifier implements TransactionDbFunctions {
       TransactionModel newModel, TransactionModel oldTransactionModel) async {
     await oldTransactionModel.editTransaction(newModel);
     await transactionRefreshUI();
-
-    // final transactionDB =
-    //     await Hive.openBox<TransactionModel>(transactionDbName);
-    // await transactionDB.putAt(index, editModel);
-    // await transactionRefreshUI();
   }
 }

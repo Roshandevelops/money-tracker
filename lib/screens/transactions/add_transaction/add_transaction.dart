@@ -6,12 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/transactions/add_transaction/widget/dropdown_widget.dart.dart';
 
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/button_widget.dart';
 import 'package:money_tracker/widgets/income_expense_radio_button.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
+import 'package:provider/provider.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   const AddTransactionScreen({
@@ -230,6 +232,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       Navigator.of(context).pop();
     }
 
-    await TransactionDB.instance.transactionRefreshUI();
+    // await TransactionDB.instance.transactionRefreshUI();
+    Provider.of<TransactionProvider>(context, listen: false)
+        .refreshTransactions();
   }
 }

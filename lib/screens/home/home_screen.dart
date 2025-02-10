@@ -6,6 +6,7 @@ import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/main.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/category_provider.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/transactions/add_transaction/add_transaction.dart';
 import 'package:money_tracker/screens/transactions/view_transactions/transactions.dart';
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     Provider.of<TransactionProvider>(context, listen: false)
         .refreshTransactions();
+    Provider.of<CategoryProvider>(context, listen: false).refreshCategory();
     showString();
 
     super.initState();
@@ -39,8 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<TransactionProvider>(context).refreshTransactions();
-    CategoryDB.instance.categoryRefreshUI();
+    // Provider.of<TransactionProvider>(context).refreshTransactions();
+    // Provider.of<CategoryProvider>(context).refreshCategory();
+
+    // CategoryDB.instance.categoryRefreshUI();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
@@ -251,6 +255,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () async {
                     await TransactionDB.instance.deleteTransaction(model);
 
+                    // await Provider.of<TransactionProvider>(ctx, listen: false)
+                    //     .refreshTransactions();
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }
