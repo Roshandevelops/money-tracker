@@ -165,15 +165,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     return;
                                                   }
                                                 }
-                                                await CategoryDB.instance
-                                                    .deleteCategory(
-                                                        categoryList.id);
+
+                                                //  await Provider.of<CategoryProvider>(ctx).deleteCategoryProvider(categoryID);
+                                                // await CategoryDB.instance
+                                                //     .deleteCategory(
+                                                //         categoryList.id);
                                                 if (ctx.mounted) {
                                                   await Provider.of<
                                                               CategoryProvider>(
                                                           ctx,
                                                           listen: false)
-                                                      .refreshCategory();
+                                                      .deleteCategoryProvider(
+                                                          categoryList.id);
+                                                  // await Provider.of<
+                                                  //             CategoryProvider>(
+                                                  //         ctx,
+                                                  //         listen: false)
+                                                  //     .refreshCategory();
 
                                                   if (ctx.mounted) {
                                                     Navigator.of(ctx).pop();

@@ -253,10 +253,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await TransactionDB.instance.deleteTransaction(model);
+                    Provider.of<TransactionProvider>(ctx, listen: false)
+                        .deleteTransactionProvider(model);
 
                     // await Provider.of<TransactionProvider>(ctx, listen: false)
                     //     .refreshTransactions();
+
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }

@@ -29,4 +29,16 @@ class TransactionProvider extends ChangeNotifier {
     currentBalance = totalIncome - totalExpense;
     notifyListeners();
   }
+
+  Future<void> editTransactionProvider(TransactionModel newTransactionModel,
+      TransactionModel oldTransactionModel) async {
+    await TransactionDB.instance
+        .editTransactionsSample(newTransactionModel, oldTransactionModel);
+    await refreshTransactions();
+  }
+
+  Future<void> deleteTransactionProvider(TransactionModel model) async {
+    await TransactionDB.instance.deleteTransaction(model);
+    await refreshTransactions();
+  }
 }

@@ -177,7 +177,9 @@ class _TodayListState extends State<TodayList> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    await TransactionDB.instance.deleteTransaction(model);
+                    Provider.of<TransactionProvider>(ctx, listen: false)
+                        .deleteTransactionProvider(model);
+                    // await TransactionDB.instance.deleteTransaction(model);
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }

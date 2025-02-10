@@ -44,20 +44,6 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
 
   Future<List> categoryRefreshUI() async {
     final allCategories = await getCategories();
-    // incomeCategoryList.value.clear();
-    // expenseCategoryList.value.clear();
-
-    // for (int i = 0; i < allCategories.length; i++) {
-    //   if (allCategories[i].type == CategoryType.income) {
-    //     incomeCategoryList.value.add(allCategories[i]);
-    //   } else {
-    //     expenseCategoryList.value.add(allCategories[i]);
-    //   }
-    // }
-
-    // incomeCategoryList.notifyListeners();
-    // expenseCategoryList.notifyListeners();
-
     return allCategories;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
@@ -21,8 +23,10 @@ class CategoryProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
 
-    // incomeCategoryList.notifyListeners();
-    // expenseCategoryList.notifyListeners();
+  Future<void> deleteCategoryProvider(String categoryID) async {
+    await CategoryDB.instance.deleteCategory(categoryID);
+    await refreshCategory();
   }
 }
