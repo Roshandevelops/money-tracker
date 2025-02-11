@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
@@ -217,28 +216,10 @@ class _EditScreenState extends State<EditScreen> {
     final descriptionText = descriptionController.text;
     final amountText = amountController.text;
 
-    // if (categoryId == null) {
-    //   return;
-    // }
-
-    // if (selectedCategoryModel == null) {
-    //   return;
-    // }
-    // if (descriptionText.isEmpty) {
-    //   return;
-    // }
-    // if (amountText.isEmpty) {
-    //   return;
-    // }
-
     final amountParsed = double.tryParse(amountText);
     if (amountParsed == null) {
       return;
     }
-
-    // if (selectedDate == null) {
-    //   return;
-    // }
     final newTransaction = TransactionModel(
         type: selectedCategoryGroupValue == 1
             ? CategoryType.income
@@ -250,8 +231,5 @@ class _EditScreenState extends State<EditScreen> {
 
     await Provider.of<TransactionProvider>(context, listen: false)
         .editTransactionProvider(newTransaction, oldTransactionModel);
-
-    // await TransactionDB.instance
-    //     .editTransactionsSample(newTransaction, oldTransactionModel);
   }
 }

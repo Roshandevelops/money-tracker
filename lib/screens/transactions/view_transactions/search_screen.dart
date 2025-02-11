@@ -5,7 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
-import 'package:money_tracker/theme/app_text_style.dart';
+import 'package:money_tracker/widgets/alertdialogue.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/edit_screen.dart';
 import 'package:money_tracker/widgets/list_view_widget.dart';
@@ -129,57 +129,27 @@ class _SearchScreenState extends State<SearchScreen> {
                 }))));
   }
 
-  void editTransaction(TransactionModel transactionModel) {
+  void editTransaction(TransactionModel transaction) {
     showDialog(
       context: context,
       builder: (ctx) {
-        return AlertDialog(
-          title: const Text("Edit !"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Are you sure ?",
-                style: AppTextStyle.body1,
+        return AlertDialogWidget(
+          title: "Edit !",
+          firsttext: "Are you sure ?",
+          secondText: "Do you want to edit ?",
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (ctx) {
+                  return EditScreen(
+                    transactionModel: transaction,
+                  );
+                },
               ),
-              const Text("Do you want to edit ?"),
-            ],
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (ctx) {
-                          return EditScreen(
-                            transactionModel: transactionModel,
-                          );
-                        },
-                      ),
-                    ).then((e) {
-                      setState(() {});
-                    });
-                  },
-                  child: const Text(
-                    "Yes",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    "No",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ],
-            )
-          ],
+            ).then((e) {
+              setState(() {});
+            });
+          },
         );
       },
     );
@@ -189,48 +159,19 @@ class _SearchScreenState extends State<SearchScreen> {
     showDialog(
       context: context,
       builder: (ctx) {
-        return AlertDialog(
-          title: const Text("Delete !"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Are you sure ?",
-                style: AppTextStyle.body1,
-              ),
-              const Text("Do you want to Delete ?"),
-            ],
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () async {
-                    await Provider.of<TransactionProvider>(ctx, listen: false)
-                        .deleteTransactionProvider(model);
+        return AlertDialogWidget(
+          model: model,
+          firsttext: " Are you sure",
+          secondText: " Do you want to delete ?",
+          title: "Delete !",
+          onPressed: () async {
+            Provider.of<TransactionProvider>(ctx, listen: false)
+                .deleteTransactionProvider(model);
 
-                    if (ctx.mounted) {
-                      Navigator.of(ctx).pop();
-                    }
-                  },
-                  child: const Text(
-                    "Yes",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },
-                  child: const Text(
-                    "No",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ],
-            )
-          ],
+            if (ctx.mounted) {
+              Navigator.of(ctx).pop();
+            }
+          },
         );
       },
     );

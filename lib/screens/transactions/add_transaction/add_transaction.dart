@@ -233,7 +233,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     }
 
     // await TransactionDB.instance.transactionRefreshUI();
-    Provider.of<TransactionProvider>(context, listen: false)
-        .refreshTransactions();
+    if (mounted) {
+      Provider.of<TransactionProvider>(context, listen: false)
+          .refreshTransactions();
+    }
   }
 }
