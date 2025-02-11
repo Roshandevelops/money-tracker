@@ -4,12 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/transactions/add_transaction/widget/dropdown_widget.dart.dart';
 
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/button_widget.dart';
 import 'package:money_tracker/widgets/income_expense_radio_button.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
+import 'package:provider/provider.dart';
 
 class EditScreen extends StatefulWidget {
   const EditScreen({
@@ -246,7 +248,10 @@ class _EditScreenState extends State<EditScreen> {
         amount: amountParsed,
         dateTime: selectedDate!);
 
-    await TransactionDB.instance
-        .editTransactionsSample(newTransaction, oldTransactionModel);
+    await Provider.of<TransactionProvider>(context, listen: false)
+        .editTransactionProvider(newTransaction, oldTransactionModel);
+
+    // await TransactionDB.instance
+    //     .editTransactionsSample(newTransaction, oldTransactionModel);
   }
 }

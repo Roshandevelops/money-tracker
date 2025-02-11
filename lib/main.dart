@@ -3,7 +3,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
+import 'package:money_tracker/provider/category_provider.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 const setkey = "";
 const setStringKey = "";
@@ -32,14 +35,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Money Tracker',
-      theme: ThemeData(
-        fontFamily: "acme",
-        hintColor: Colors.grey,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) {
+            return TransactionProvider();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return CategoryProvider();
+          },
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Money Tracker',
+        theme: ThemeData(
+          fontFamily: "acme",
+          hintColor: Colors.grey,
+        ),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }

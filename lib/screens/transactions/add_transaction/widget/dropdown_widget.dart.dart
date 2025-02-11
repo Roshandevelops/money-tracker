@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
+import 'package:money_tracker/provider/category_provider.dart';
+import 'package:provider/provider.dart';
 
 class DropDownWidget extends StatelessWidget {
   const DropDownWidget({
@@ -17,8 +18,6 @@ class DropDownWidget extends StatelessWidget {
   final void Function(String? newValue)? onChanged;
   final void Function(CategoryModel)? onMenuItemTap;
   final String? Function(String?)? validator;
-
-  // final List<DropdownMenuItem<String>>? items;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +38,8 @@ class DropDownWidget extends StatelessWidget {
           ),
         ),
         items: (selectedCategoryType == CategoryType.income
-                ? CategoryDB.instance.incomeCategoryListListener
-                : CategoryDB.instance.expenseCategoryListListener)
-            .value
+                ? Provider.of<CategoryProvider>(context).incomeCategoryList
+                : Provider.of<CategoryProvider>(context).expenseCategoryList)
             .map(
           (e) {
             return DropdownMenuItem(

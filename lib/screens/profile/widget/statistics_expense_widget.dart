@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/db/category/category_db.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
+import 'package:money_tracker/provider/category_provider.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
 
 class StatisticsExpenseWidget extends StatefulWidget {
   const StatisticsExpenseWidget({super.key});
@@ -17,12 +18,19 @@ class _StatisticsExpenseWidgetState extends State<StatisticsExpenseWidget> {
   @override
   void initState() {
     for (int i = 0;
-        i < CategoryDB.instance.expenseCategoryListListener.value.length;
+        i <
+            Provider.of<CategoryProvider>(context, listen: false)
+                .expenseCategoryList
+                .length;
         i++) {
-      final categoryName =
-          CategoryDB.instance.expenseCategoryListListener.value[i].name;
+      final categoryName = Provider.of<CategoryProvider>(context, listen: false)
+          .expenseCategoryList[i]
+          .name;
+
       final transactions =
-          TransactionDB.instance.transactionListNotifier.value.where(
+          Provider.of<TransactionProvider>(context, listen: false)
+              .transactionList
+              .where(
         (e) {
           return e.categoryModel.name == categoryName;
         },

@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
+import 'package:money_tracker/provider/category_provider.dart';
 import 'package:money_tracker/theme/app_text_style.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/income_expense_radio_button.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
+import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({
@@ -20,7 +22,8 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
-    CategoryDB().categoryRefreshUI();
+    Provider.of<CategoryProvider>(context, listen: false).refreshCategory();
+    // CategoryDB().categoryRefreshUI();
     super.initState();
   }
 
@@ -30,7 +33,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Provider.of<CategoryProvider>(context).refreshCategory();
     final TextEditingController alertBoxController = TextEditingController();
+
     return Scaffold(
       appBar: const AppBarWidget(
         title: "Categories",
@@ -42,155 +47,182 @@ class _CategoryScreenState extends State<CategoryScreen> {
           left: 20,
           right: 20,
         ),
-        child: Column(
-          children: [
-            IncomeExpenseRadioButton(
-              groupValue: selectedCategoryGroupValue,
-              onChanged: (groupValue) {
-                setState(
-                  () {
-                    selectedCategoryGroupValue = groupValue!;
-                  },
-                );
-              },
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ValueListenableBuilder(
-              valueListenable: (selectedCategoryGroupValue == 1
-                  ? CategoryDB.instance.incomeCategoryListListener
-                  : CategoryDB.instance.expenseCategoryListListener),
-              builder: (context, newList, _) {
-                return Expanded(
-                  child: newList.isNotEmpty
-                      ? GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                          ),
-                          itemBuilder: (ctx, index) {
-                            final categoryList = newList[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: const Color(0xFF0B1C3B),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      categoryList.name,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
+        child: Column(children: [
+          IncomeExpenseRadioButton(
+            groupValue: selectedCategoryGroupValue,
+            onChanged: (groupValue) {
+              setState(
+                () {
+                  selectedCategoryGroupValue = groupValue!;
+                },
+              );
+            },
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          // ValueListenableBuilder(
+          //   valueListenable: (selectedCategoryGroupValue == 1
+          //       ? CategoryDB.instance.incomeCategoryListListener
+          //       : CategoryDB.instance.expenseCategoryListListener),
+          //   builder: (context, newList, _) {
+          //     return
+          Consumer<CategoryProvider>(
+            builder: (context, categoryConsumer, child) {
+              final newCategoryList = selectedCategoryGroupValue == 1
+                  ? categoryConsumer.incomeCategoryList
+                  : categoryConsumer.expenseCategoryList;
+
+              print(newCategoryList);
+
+              return Expanded(
+                child: newCategoryList.isNotEmpty
+                    ? GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                        ),
+                        itemBuilder: (ctx, index) {
+                          final categoryList = newCategoryList[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: const Color(0xFF0B1C3B),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    categoryList.name,
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
-                                Positioned(
-                                  bottom: -5,
-                                  right: -5,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) {
-                                          return AlertDialog(
-                                            backgroundColor: Colors.white,
-                                            title: const Text("Delete Item !"),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  "Are you sure ?",
-                                                  style: AppTextStyle.body1,
-                                                ),
-                                                const Text(
-                                                    "Do you want to Delete ?")
-                                              ],
-                                            ),
-                                            actions: [
-                                              MaterialButton(
-                                                onPressed: () async {
-                                                  bool hasTransaction =
-                                                      await checkIfCategoryHasTransactions(
-                                                          categoryList.id);
-                                                  if (hasTransaction) {
-                                                    if (context.mounted) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          showCloseIcon: true,
-                                                          duration:
-                                                              const Duration(
-                                                                  seconds: 4),
-                                                          backgroundColor:
-                                                              const Color
-                                                                  .fromARGB(255,
-                                                                  46, 45, 45),
-                                                          content: Column(
-                                                            children: [
-                                                              Text(
-                                                                "Can't delete    '${categoryList.name}' ",
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            18),
-                                                              ),
-                                                              Text(
-                                                                  "Delete  '${categoryList.name}'  transaction first !!")
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-
-                                                    if (context.mounted) {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                      return;
-                                                    }
-                                                  }
-                                                  CategoryDB.instance
-                                                      .deleteCategory(
-                                                          categoryList.id);
-                                                  if (context.mounted) {
-                                                    Navigator.of(context).pop();
-                                                  }
-                                                },
-                                                child: const Text("Yes"),
+                              ),
+                              Positioned(
+                                bottom: -5,
+                                right: -5,
+                                child: IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: const Text("Delete Item !"),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "Are you sure ?",
+                                                style: AppTextStyle.body1,
                                               ),
-                                              MaterialButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text("No"),
-                                              )
+                                              const Text(
+                                                  "Do you want to Delete ?")
                                             ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Color(0xFFC8C5C5),
-                                    ),
+                                          ),
+                                          actions: [
+                                            MaterialButton(
+                                              onPressed: () async {
+                                                bool hasTransaction =
+                                                    await checkIfCategoryHasTransactions(
+                                                        categoryList.id);
+                                                if (hasTransaction) {
+                                                  if (context.mounted) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        showCloseIcon: true,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 4),
+                                                        backgroundColor:
+                                                            const Color
+                                                                .fromARGB(255,
+                                                                46, 45, 45),
+                                                        content: Column(
+                                                          children: [
+                                                            Text(
+                                                              "Can't delete    '${categoryList.name}' ",
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          18),
+                                                            ),
+                                                            Text(
+                                                                "Delete  '${categoryList.name}'  transaction first !!")
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  if (ctx.mounted) {
+                                                    Navigator.of(ctx).pop();
+                                                    return;
+                                                  }
+                                                }
+
+                                                //  await Provider.of<CategoryProvider>(ctx).deleteCategoryProvider(categoryID);
+                                                // await CategoryDB.instance
+                                                //     .deleteCategory(
+                                                //         categoryList.id);
+                                                if (ctx.mounted) {
+                                                  await Provider.of<
+                                                              CategoryProvider>(
+                                                          ctx,
+                                                          listen: false)
+                                                      .deleteCategoryProvider(
+                                                          categoryList.id);
+                                                  // await Provider.of<
+                                                  //             CategoryProvider>(
+                                                  //         ctx,
+                                                  //         listen: false)
+                                                  //     .refreshCategory();
+
+                                                  if (ctx.mounted) {
+                                                    Navigator.of(ctx).pop();
+                                                  }
+                                                }
+                                              },
+                                              child: const Text("Yes"),
+                                            ),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                Navigator.pop(ctx);
+                                              },
+                                              child: const Text("No"),
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Color(0xFFC8C5C5),
                                   ),
-                                )
-                              ]),
-                            );
-                          },
-                          itemCount: newList.length,
-                        )
-                      : const Center(child: Text("No Categories !")),
-                );
-              },
+                                ),
+                              )
+                            ]),
+                          );
+                        },
+                        itemCount: newCategoryList.length,
+                      )
+                    : const Center(
+                        child: Text("No Categories !"),
+                      ),
+              );
+            },
+          )
+        ]
+            //   },
+            // ),
+
             ),
-          ],
-        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF0B1C3B),
@@ -255,17 +287,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   "Category   '$alertController'   already exists!";
                             },
                           );
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //   const SnackBar(
-                          //     duration: Duration(seconds: 5),
-                          //     padding: EdgeInsets.all(20),
-                          //     backgroundColor: Colors.red,
-                          //     behavior: SnackBarBehavior.floating,
-                          //     content: Align(
-                          //         alignment: Alignment.center,
-                          //         child: Text("Already Exist")),
-                          //   ),
-                          // );
                         }
 
                         return;
@@ -280,9 +301,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         id: DateTime.now().microsecondsSinceEpoch.toString(),
                       );
                       await CategoryDB.instance.insertCategory(category);
+
                       alertBoxController.clear();
 
                       if (context.mounted) {
+                        Provider.of<CategoryProvider>(context, listen: false)
+                            .refreshCategory();
+
                         Navigator.of(ctx).pop();
                       }
                     },
@@ -291,7 +316,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         const Text("Add Item"),
                         MaterialButton(
                           onPressed: () {
-                            Navigator.pop(context);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+
                             alertBoxController.clear();
                           },
                           child: const Text("Cancel"),
@@ -310,8 +338,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Future<bool> checkIfCatgoryExists(String categoryName) async {
     final categoryExist = selectedCategoryGroupValue == 1
-        ? CategoryDB.instance.incomeCategoryListListener.value
-        : CategoryDB.instance.expenseCategoryListListener.value;
+        ? Provider.of<CategoryProvider>(context, listen: false)
+            .incomeCategoryList
+        : Provider.of<CategoryProvider>(context, listen: false)
+            .expenseCategoryList;
+
+    // CategoryDB.instance.incomeCategoryListListener.value
+    // : CategoryDB.instance.expenseCategoryListListener.value;
 
     for (final category in categoryExist) {
       if (category.name.toLowerCase() == categoryName.toLowerCase()) {

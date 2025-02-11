@@ -17,11 +17,6 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
     return CategoryDB.instance;
   }
 
-  ValueNotifier<List<CategoryModel>> incomeCategoryListListener =
-      ValueNotifier([]);
-  ValueNotifier<List<CategoryModel>> expenseCategoryListListener =
-      ValueNotifier([]);
-
   @override
   Future<void> insertCategory(CategoryModel categoryModelValue) async {
     final categoryDB = await Hive.openBox<CategoryModel>(categoryDbName);
@@ -42,51 +37,8 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
     categoryRefreshUI();
   }
 
-  Future<void> categoryRefreshUI() async {
+  Future<List> categoryRefreshUI() async {
     final allCategories = await getCategories();
-    incomeCategoryListListener.value.clear();
-    expenseCategoryListListener.value.clear();
-
-    // allCategories.map(
-    //   (e) {
-    //     if (e.type == CategoryType.income) {
-    //       incomeCategoryListListener.value.add(e);
-    //     } else {
-    //       expenseCategoryListListener.value.add(e);
-    //     }
-    //     return e;
-    //   },
-    // );
-
-    // incomeCategoryListListener.notifyListeners();
-    // expenseCategoryListListener.notifyListeners();
-
-    //other method
-
-    for (int i = 0; i < allCategories.length; i++) {
-      if (allCategories[i].type == CategoryType.income) {
-        incomeCategoryListListener.value.add(allCategories[i]);
-      } else {
-        expenseCategoryListListener.value.add(allCategories[i]);
-      }
-    }
-
-    incomeCategoryListListener.notifyListeners();
-    expenseCategoryListListener.notifyListeners();
-
-    //other method
-
-    // await Future.forEach(
-    //   allCategories,
-    //   (CategoryModel category) {
-    //     if (category.type == CategoryType.income) {
-    //       incomeCategoryListListener.value.add(category);
-    //     } else {
-    //       expenseCategoryListListener.value.add(category);
-    //     }
-    //   },
-    // );
-    // incomeCategoryListListener.notifyListeners();
-    // expenseCategoryListListener.notifyListeners();
+    return allCategories;
   }
 }

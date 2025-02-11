@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
+import 'package:money_tracker/provider/transaction_provider.dart';
+import 'package:provider/provider.dart';
 import 'amount_icon.dart';
 import 'income_expense.dart';
 
@@ -36,12 +37,11 @@ class CurrentBalanceWidget extends StatelessWidget {
                 fontSize: 25,
               ),
             ),
-            ValueListenableBuilder(
-              valueListenable: TransactionDB.instance.currentBalance,
-              builder: (context, value, child) {
+            Consumer<TransactionProvider>(
+              builder: (context, helloValue, child) {
                 return AmountCurrency(
                   currencySymbol: "₹",
-                  amount: value,
+                  amount: helloValue.currentBalance,
                 );
               },
             ),
@@ -58,15 +58,13 @@ class CurrentBalanceWidget extends StatelessWidget {
                       text: "Income",
                       iconData: Icons.arrow_circle_up_outlined,
                     ),
-                    ValueListenableBuilder(
-                      valueListenable: TransactionDB.instance.totalIncome,
-                      builder: (context, value, child) {
-                        return AmountCurrency(
-                          amount: value,
-                          currencySymbol: "₹",
-                        );
-                      },
-                    ),
+                    Consumer<TransactionProvider>(
+                        builder: (context, helloValue, child) {
+                      return AmountCurrency(
+                        amount: helloValue.totalIncome,
+                        currencySymbol: "₹",
+                      );
+                    }),
                   ],
                 ),
                 Column(
@@ -76,15 +74,13 @@ class CurrentBalanceWidget extends StatelessWidget {
                       iconData: Icons.arrow_circle_down_outlined,
                       color: Colors.red,
                     ),
-                    ValueListenableBuilder(
-                      valueListenable: TransactionDB.instance.totalExpense,
-                      builder: (context, value, child) {
-                        return AmountCurrency(
-                          amount: value,
-                          currencySymbol: "₹",
-                        );
-                      },
-                    ),
+                    Consumer<TransactionProvider>(
+                        builder: (context, helloValue, child) {
+                      return AmountCurrency(
+                        amount: helloValue.totalExpense,
+                        currencySymbol: "₹",
+                      );
+                    }),
                   ],
                 ),
               ],
