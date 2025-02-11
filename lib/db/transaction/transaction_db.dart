@@ -4,8 +4,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 
-import 'package:money_tracker/provider/transaction_provider.dart';
-
 const String transactionDbName = "TRANSACTION_DB_NAME";
 
 abstract class TransactionDbFunctions {
@@ -24,9 +22,6 @@ class TransactionDB extends ChangeNotifier implements TransactionDbFunctions {
   factory TransactionDB() {
     return instance;
   }
-
-  // ValueNotifier<List<TransactionModel>> transactionListNotifier =
-  //     ValueNotifier([]);
 
   @override
   Future<void> addTransactions(TransactionModel transactionModelValue) async {
@@ -63,8 +58,6 @@ class TransactionDB extends ChangeNotifier implements TransactionDbFunctions {
   Future<void> deleteTransaction(TransactionModel model) async {
     await model.deleteTransactionSample();
     await transactionRefreshUI();
-
-    // Provider.of<DeleteProvider>(context).deleteTransaction(model);
   }
 
   @override

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
@@ -179,7 +178,7 @@ class _TodayListState extends State<TodayList> {
                   onPressed: () async {
                     Provider.of<TransactionProvider>(ctx, listen: false)
                         .deleteTransactionProvider(model);
-                    // await TransactionDB.instance.deleteTransaction(model);
+
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }

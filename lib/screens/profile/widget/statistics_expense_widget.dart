@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/provider/category_provider.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -23,13 +22,11 @@ class _StatisticsExpenseWidgetState extends State<StatisticsExpenseWidget> {
             Provider.of<CategoryProvider>(context, listen: false)
                 .expenseCategoryList
                 .length;
-        // CategoryDB.instance.expenseCategoryListListener.value.length
-
         i++) {
       final categoryName = Provider.of<CategoryProvider>(context, listen: false)
           .expenseCategoryList[i]
           .name;
-      // CategoryDB.instance.expenseCategoryListListener.value[i].name;
+
       final transactions =
           Provider.of<TransactionProvider>(context, listen: false)
               .transactionList

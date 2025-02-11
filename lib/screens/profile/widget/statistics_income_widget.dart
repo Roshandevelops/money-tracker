@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/db/category/category_db.dart';
 import 'package:money_tracker/provider/category_provider.dart';
-
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
@@ -22,19 +20,14 @@ class _StatisticsIncomeWidgetState extends State<StatisticsIncomeWidget> {
             Provider.of<CategoryProvider>(context, listen: false)
                 .incomeCategoryList
                 .length;
-        //  CategoryDB.instance.incomeCategoryListListener.value.length;
-
         i++) {
       final categoryName = Provider.of<CategoryProvider>(context, listen: false)
           .incomeCategoryList[i]
           .name;
-      // CategoryDB.instance.incomeCategoryListListener.value[i].name;
 
       final transactions =
           Provider.of<TransactionProvider>(context, listen: false)
               .transactionList
-              //  TransactionDB.instance.transactionListNotifier.value
-
               .where((e) => e.categoryModel.name == categoryName)
               .toList();
 

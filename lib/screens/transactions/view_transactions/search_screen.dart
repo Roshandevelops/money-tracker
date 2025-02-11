@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
@@ -26,13 +25,9 @@ class _SearchScreenState extends State<SearchScreen> {
   List<TransactionModel> filteredList = [];
   @override
   void initState() {
-    // setState(
-    //   () {
     filteredList = Provider.of<TransactionProvider>(context, listen: false)
         .transactionList;
-    //  TransactionDB.instance.transactionListNotifier.value;
-    // },
-    // );
+
     super.initState();
   }
 
@@ -50,13 +45,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   right: 20,
                   top: 20,
                 ),
-                child:
-
-                    // valueListenable: TransactionDB.instance.transactionListNotifier,
-                    // builder: (BuildContext context, List<TransactionModel> newList, _) {
-                    //   log("items ${newList.length.toString()}");
-                    Consumer<TransactionProvider>(
-                        builder: (context, newValue, child) {
+                child: Consumer<TransactionProvider>(
+                    builder: (context, newValue, child) {
                   return Column(
                     children: [
                       TextFormFieldWidget(
@@ -97,7 +87,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       children: [
                                         SlidableAction(
                                           onPressed: (ctx) {
-                                            // log("sample edit");
                                             editTransaction(newValue
                                                 .transactionList[index]);
                                           },
@@ -107,8 +96,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                         ),
                                         SlidableAction(
                                           onPressed: (context) {
-                                            // log("sample delete");
-
                                             deleteTransaction(context, data);
                                           },
                                           icon: Icons.delete,
@@ -220,9 +207,9 @@ class _SearchScreenState extends State<SearchScreen> {
               children: [
                 TextButton(
                   onPressed: () async {
-                    Provider.of<TransactionProvider>(ctx, listen: false)
+                    await Provider.of<TransactionProvider>(ctx, listen: false)
                         .deleteTransactionProvider(model);
-                    // await TransactionDB.instance.deleteTransaction(model);
+
                     if (ctx.mounted) {
                       Navigator.of(ctx).pop();
                     }

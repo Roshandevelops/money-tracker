@@ -160,8 +160,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     );
                                                   }
 
-                                                  if (context.mounted) {
-                                                    Navigator.of(context).pop();
+                                                  if (ctx.mounted) {
+                                                    Navigator.of(ctx).pop();
                                                     return;
                                                   }
                                                 }
