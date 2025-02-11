@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:money_tracker/db/category/category_db.dart';
@@ -61,19 +63,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
           const SizedBox(
             height: 30,
           ),
-          // ValueListenableBuilder(
-          //   valueListenable: (selectedCategoryGroupValue == 1
-          //       ? CategoryDB.instance.incomeCategoryListListener
-          //       : CategoryDB.instance.expenseCategoryListListener),
-          //   builder: (context, newList, _) {
-          //     return
           Consumer<CategoryProvider>(
             builder: (context, categoryConsumer, child) {
               final newCategoryList = selectedCategoryGroupValue == 1
                   ? categoryConsumer.incomeCategoryList
                   : categoryConsumer.expenseCategoryList;
 
-              print(newCategoryList);
+              log(newCategoryList.toString());
 
               return Expanded(
                 child: newCategoryList.isNotEmpty
@@ -166,10 +162,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   }
                                                 }
 
-                                                //  await Provider.of<CategoryProvider>(ctx).deleteCategoryProvider(categoryID);
-                                                // await CategoryDB.instance
-                                                //     .deleteCategory(
-                                                //         categoryList.id);
                                                 if (ctx.mounted) {
                                                   await Provider.of<
                                                               CategoryProvider>(
@@ -177,11 +169,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                           listen: false)
                                                       .deleteCategoryProvider(
                                                           categoryList.id);
-                                                  // await Provider.of<
-                                                  //             CategoryProvider>(
-                                                  //         ctx,
-                                                  //         listen: false)
-                                                  //     .refreshCategory();
 
                                                   if (ctx.mounted) {
                                                     Navigator.of(ctx).pop();
@@ -235,8 +222,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
           color: Colors.white,
         ),
       ),
-      // bottomNavigationBar: CurvedNavigationWidget()
-      // const BottomNavigationbarWidget(),
     );
   }
 
@@ -342,9 +327,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
             .incomeCategoryList
         : Provider.of<CategoryProvider>(context, listen: false)
             .expenseCategoryList;
-
-    // CategoryDB.instance.incomeCategoryListListener.value
-    // : CategoryDB.instance.expenseCategoryListListener.value;
 
     for (final category in categoryExist) {
       if (category.name.toLowerCase() == categoryName.toLowerCase()) {
