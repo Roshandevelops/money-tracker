@@ -7,7 +7,7 @@ import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/widgets/alertdialogue.dart';
 import 'package:money_tracker/widgets/app_bar_widget.dart';
-import 'package:money_tracker/widgets/edit_screen.dart';
+import 'package:money_tracker/screens/transactions/add_transaction/edit_transaction.dart';
 import 'package:money_tracker/widgets/list_view_widget.dart';
 import 'package:money_tracker/widgets/text_form_field_widget.dart';
 import 'package:provider/provider.dart';

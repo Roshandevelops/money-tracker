@@ -17,11 +17,6 @@ class CategoryDB extends ChangeNotifier implements CategoryDbFunctions {
     return CategoryDB.instance;
   }
 
-  // ValueNotifier<List<CategoryModel>> incomeCategoryListListener =
-  //     ValueNotifier([]);
-  // ValueNotifier<List<CategoryModel>> expenseCategoryListListener =
-  //     ValueNotifier([]);
-
   @override
   Future<void> insertCategory(CategoryModel categoryModelValue) async {
     final categoryDB = await Hive.openBox<CategoryModel>(categoryDbName);

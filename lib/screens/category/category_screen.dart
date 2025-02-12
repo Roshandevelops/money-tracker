@@ -25,7 +25,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     Provider.of<CategoryProvider>(context, listen: false).refreshCategory();
-    // CategoryDB().categoryRefreshUI();
     super.initState();
   }
 
@@ -35,13 +34,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<CategoryProvider>(context).refreshCategory();
     final TextEditingController alertBoxController = TextEditingController();
-
     return Scaffold(
-      appBar: const AppBarWidget(
-        title: "Categories",
-      ),
+      appBar: const AppBarWidget(title: "Categories"),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.only(
@@ -68,9 +63,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               final newCategoryList = selectedCategoryGroupValue == 1
                   ? categoryConsumer.incomeCategoryList
                   : categoryConsumer.expenseCategoryList;
-
               log(newCategoryList.toString());
-
               return Expanded(
                 child: newCategoryList.isNotEmpty
                     ? GridView.builder(

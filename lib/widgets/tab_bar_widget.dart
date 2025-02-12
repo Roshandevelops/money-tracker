@@ -16,16 +16,6 @@ class TabBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      // decoration: BoxDecoration(
-      // borderRadius: BorderRadius.circular(10),
-      // gradient: const LinearGradient(
-      //   colors: [
-      //     Color(0xFF0B1C3B),
-      //     Color(0xFF781F3E),
-      //     Color(0xFF011401),
-      //   ],
-      // ),
-      // ),
       child: TabBar(
         indicator: BoxDecoration(
           color:
