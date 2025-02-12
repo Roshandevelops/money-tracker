@@ -10,7 +10,6 @@ class TransactionCardWidget extends StatelessWidget {
       this.iconData,
       this.dateTime,
       this.iconColor,
-      // this.onPressed,
       this.amount});
 
   final String? purposeText;
@@ -19,12 +18,8 @@ class TransactionCardWidget extends StatelessWidget {
   final IconData? iconData;
   final num? amount;
   final Color? iconColor;
-
-  // final void Function()? onPressed;
-
   @override
   Widget build(BuildContext context) {
-    // log(DateTime.now().toString());
     return Card(
       color: Colors.white,
       shadowColor: Colors.black,
@@ -49,89 +44,16 @@ class TransactionCardWidget extends StatelessWidget {
                 DateFormat('MMM dd,yyyy').format(
                   dateTime!,
                 ),
-                // amount.toString(),
                 style: AppTextStyle.body2,
               ),
             ),
-            // Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // children: [
-            // Text(
-            //   DateFormat('MMM dd,yyyy').format(
-            //     dateTime,
-            //   ),
-            //   style: AppTextStyle.body3,
-            // ),
-
-            // IconButton(
-            //   onPressed: () {
-            //     Navigator.of(context).push(
-            //       MaterialPageRoute(
-            //         builder: (ctx) {
-            //           return const AddTransactionScreen();
-            //         },
-            //       ),
-            //     );
-            //   },
-            //   icon: const Icon(
-            //     Icons.edit,
-            //     color: Colors.green,
-            //   ),
-            // ),
-            // ],
-            // ),
             Text(
               amount.toString(),
               style: AppTextStyle.body3,
             ),
           ],
         ),
-        // trailing: Column(
-        //   children: [
-        //     Text(
-        //       DateFormat('hh: mm,a').format(
-        //         dateTime,
-        //       ),
-        //       style: AppTextStyle.body2,
-        //     ),
-        //     Expanded(
-        //       child: IconButton(
-        //         onPressed: () {
-        //           deleteItem(context);
-        //         },
-        //         icon: const Icon(Icons.delete, color: Colors.red),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
-
-  // void deleteItem(context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) {
-  //       return AlertDialog(
-  //         backgroundColor: Colors.white,
-  //         title: const Text("Delete Item"),
-  //         content: const Text("Are you sure, Do you want to delete ?"),
-  //         actions: [
-  //           MaterialButton(
-  //             onPressed: () {
-  //               //  onPressed,
-  //             },
-  //             child: const Text("Yes"),
-  //           ),
-  //           MaterialButton(
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             },
-  //             child: const Text("No"),
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }

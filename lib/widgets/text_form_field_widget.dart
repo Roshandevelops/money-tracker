@@ -28,7 +28,6 @@ class TextFormFieldWidget extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
-
   final TextStyle? textStyle;
 
   @override
@@ -48,10 +47,6 @@ class TextFormFieldWidget extends StatelessWidget {
           suffixIcon: suffixIcon,
           hintText: hintText,
           hintStyle: textStyle,
-          // const TextStyle(
-          //   fontSize: 18,
-          // ),
-
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
