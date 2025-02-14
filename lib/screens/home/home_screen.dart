@@ -34,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .refreshTransactions();
     Provider.of<CategoryProvider>(context, listen: false).refreshCategory();
     showString();
-
     super.initState();
   }
 
@@ -79,15 +78,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 20,
               ),
               Consumer<TransactionProvider>(
-                builder: (context, helloValue, child) {
+                builder: (context, transactionConsumer, child) {
                   return Expanded(
-                    child: helloValue.transactionList.isNotEmpty
+                    child: transactionConsumer.transactionList.isNotEmpty
                         ? ListView.builder(
-                            itemCount: helloValue.transactionList.length >= 4
-                                ? 4
-                                : helloValue.transactionList.length,
+                            itemCount:
+                                transactionConsumer.transactionList.length >= 4
+                                    ? 4
+                                    : transactionConsumer
+                                        .transactionList.length,
                             itemBuilder: (ctx, index) {
-                              final data = helloValue.transactionList[index];
+                              final data =
+                                  transactionConsumer.transactionList[index];
                               return Slidable(
                                 key: Key(data.id!),
                                 endActionPane: ActionPane(
@@ -97,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onPressed: (ctx) {
                                         log("sample edit");
                                         editTransaction(
-                                          helloValue.transactionList[index],
+                                          transactionConsumer
+                                              .transactionList[index],
                                         );
                                       },
                                       icon: Icons.edit,
@@ -206,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
           secondText: " Do you want to delete ?",
           title: "Delete !",
           onPressed: () async {
-            Provider.of<TransactionProvider>(ctx, listen: false)
+            await Provider.of<TransactionProvider>(ctx, listen: false)
                 .deleteTransactionProvider(model);
 
             if (ctx.mounted) {

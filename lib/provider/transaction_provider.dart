@@ -41,4 +41,10 @@ class TransactionProvider extends ChangeNotifier {
     await TransactionDB.instance.deleteTransaction(model);
     await refreshTransactions();
   }
+
+  Future<void> addTransactionProvider(
+      TransactionModel transactionModelValue) async {
+    await TransactionDB.instance.addTransactions(transactionModelValue);
+    await refreshTransactions();
+  }
 }

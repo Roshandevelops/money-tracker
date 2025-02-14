@@ -278,7 +278,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         type: type,
                         id: DateTime.now().microsecondsSinceEpoch.toString(),
                       );
-                      await CategoryDB.instance.insertCategory(category);
+                      if (context.mounted) {
+                        await Provider.of<CategoryProvider>(context,
+                                listen: false)
+                            .insertCategoryProvider(category);
+                      }
 
                       alertBoxController.clear();
 

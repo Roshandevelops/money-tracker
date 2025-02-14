@@ -12,7 +12,6 @@ abstract class TransactionDbFunctions {
   Future<void> deleteTransaction(TransactionModel model);
   Future<void> editTransactionsSample(
       TransactionModel editModel, TransactionModel oldTransactionModel);
-
   Future<List<TransactionModel>> transactionRefreshUI();
 }
 

@@ -1,14 +1,10 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:money_tracker/db/transaction/transaction_db.dart';
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/transaction_provider.dart';
 import 'package:money_tracker/screens/transactions/add_transaction/widget/dropdown_widget.dart.dart';
-
 import 'package:money_tracker/widgets/app_bar_widget.dart';
 import 'package:money_tracker/widgets/button_widget.dart';
 import 'package:money_tracker/widgets/income_expense_radio_button.dart';
@@ -19,20 +15,15 @@ class AddTransactionScreen extends StatefulWidget {
   const AddTransactionScreen({
     super.key,
   });
-
   @override
   State<AddTransactionScreen> createState() => _AddTransactionScreenState();
 }
 
 class _AddTransactionScreenState extends State<AddTransactionScreen> {
   int selectedCategoryGroupValue = 1;
-
   final TextEditingController descriptionController = TextEditingController();
-
   final TextEditingController amountController = TextEditingController();
-
   final TextEditingController dateController = TextEditingController();
-
   DateTime? selectedDate;
   String? categoryId;
   CategoryModel? selectedCategoryModel;
@@ -225,16 +216,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         description: descriptionText,
         amount: amountParsed,
         dateTime: selectedDate!);
-    log(model.toString());
-    log("hy");
-    await TransactionDB.instance.addTransactions(model);
+    await Provider.of<TransactionProvider>(context, listen: false)
+        .addTransactionProvider(model);
+
     if (mounted) {
       Navigator.of(context).pop();
     }
-
-    // await TransactionDB.instance.transactionRefreshUI();
     if (mounted) {
-      Provider.of<TransactionProvider>(context, listen: false)
+      await Provider.of<TransactionProvider>(context, listen: false)
           .refreshTransactions();
     }
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:money_tracker/models/category/category_model.dart';
 import 'package:money_tracker/models/transaction/transaction_model.dart';
 import 'package:money_tracker/provider/category_provider.dart';
@@ -38,17 +37,25 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) {
+          create: (BuildContext context) {
             return TransactionProvider();
           },
         ),
         ChangeNotifierProvider(
-          create: (context) {
+          create: (BuildContext context) {
             return CategoryProvider();
           },
         ),
       ],
       child: MaterialApp(
+        builder: (BuildContext context, Widget? child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: const TextScaler.linear(1.0),
+            ),
+            child: child!,
+          );
+        },
         debugShowCheckedModeBanner: false,
         title: 'Money Tracker',
         theme: ThemeData(
