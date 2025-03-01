@@ -91,18 +91,20 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                   ),
                   const SizedBox(height: 20),
                   TextFormFieldWidget(
-                      inputFormatters: [LengthLimitingTextInputFormatter(20)],
-                      validator: (p0) {
-                        if (descriptionController.text.isNotEmpty) {
-                          log("Description data matching");
-                          return null;
-                        } else {
-                          log("description Data not matching");
-                          return "Field Required";
-                        }
-                      },
-                      textController: descriptionController,
-                      hintText: "Description"),
+                    inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                    validator: (p0) {
+                      if (descriptionController.text.isNotEmpty) {
+                        log("Description data matching");
+                        return null;
+                      } else {
+                        log("description Data not matching");
+                        return "Field Required";
+                      }
+                    },
+                    textController: descriptionController,
+                    hintText: "Description",
+                    textStyle: const TextStyle(color: Colors.grey),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -123,6 +125,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     ],
                     textController: amountController,
                     hintText: "Amount",
+                    textStyle: const TextStyle(color: Colors.grey),
                   ),
                   const SizedBox(
                     height: 20,

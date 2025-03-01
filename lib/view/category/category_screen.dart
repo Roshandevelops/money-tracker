@@ -282,9 +282,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 listen: false)
                             .insertCategoryProvider(category);
                       }
-
                       alertBoxController.clear();
-
                       if (context.mounted) {
                         Provider.of<CategoryProvider>(context, listen: false)
                             .refreshCategory();
