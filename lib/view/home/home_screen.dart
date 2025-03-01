@@ -54,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const CurrentBalanceWidget(),
+              SizedBox(
+                height: 10,
+              ),
               const SizedBox(
                 height: 20,
               ),
