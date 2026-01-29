@@ -65,35 +65,6 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-    // Scaffold(
-    //   backgroundColor: Colors.white,
-    //   body: SafeArea(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         const Text(
-    //           " Welcome To",
-    //           style: TextStyle(
-    //             color: Color(0xFF0B1C3B),
-    //             fontSize: 20,
-    //             fontWeight: FontWeight.w500,
-    //             fontFamily: "alclonica",
-    //           ),
-    //         ),
-    //         text2,
-    //         const SizedBox(
-    //           height: 100,
-    //         ),
-    //         Center(
-    //           child: Image.asset(
-    //             "assets/images/Counting Money GIFs _ Tenor.gif",
-    //             // color: Colors.red,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 
   void goToRegister(context) async {
